@@ -1,3 +1,9 @@
+/*
+* @Name: Arsalan Arif Radhu
+* @Student ID: 100813965
+* @Date: 18 December 2021
+* @
+*/
 package ca.durhamcollege.oop3200f2021javalab5;
 
 import javafx.application.Application;
@@ -12,8 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class Main extends Application {
 
@@ -77,17 +81,36 @@ public class Main extends Application {
                 String bmiOut;
                 String bmiResult = "";
                 String errorMessage = "";
+                double MAX_HEIGHT = 2.51; // Tallest person on Earth
+                double MIN_HEIGHT = 0.54; // Shortest person on Earth
+                double MAX_WEIGHT = 635; // Heaviest person on Earth
+                double MIN_WEIGHT = 2; // Lightest person on Earth
 
                 // VALIDATE INPUT EMPTY OR NOT
                 if(heightInput.getText() == null || heightInput.getText().trim().isEmpty())
                 {
-                    errorMessage += "Height should not be empty!\n ";
+                    errorMessage += "Height should not be empty!\n";
                     isValid = false;
                 }
                 if(weightInput.getText() == null || weightInput.getText().trim().isEmpty())
                 {
-                    errorMessage+= "Weight should not be empty!\n ";
+                    errorMessage+= "Weight should not be empty!\n";
                     isValid = false;
+                }
+
+                if(isValid)
+                {
+                    // CHECK INPUT IS WITHIN ACCEPTABLE RANGE
+                    if ((Double.parseDouble(heightInput.getText()) > MAX_HEIGHT) && (Double.parseDouble(heightInput.getText()) < MIN_HEIGHT))
+                    {
+                        errorMessage += "Height should be between " + MAX_HEIGHT + " and " + MIN_HEIGHT + ". \n";
+                        isValid = false;
+                    }
+                    if ((Double.parseDouble(weightInput.getText()) > MAX_WEIGHT) && (Double.parseDouble(weightInput.getText()) < MIN_WEIGHT))
+                    {
+                        errorMessage += "Weight should be between " + MAX_WEIGHT + " and " + MIN_WEIGHT + ". \n";
+                        isValid = false;
+                    }
                 }
 
                 if(isValid)
@@ -102,25 +125,6 @@ public class Main extends Application {
                     catch (NumberFormatException numberFormatException)
                     {
                         errorMessage += "NUMERIC input only!\n ";
-                        isValid = false;
-                    }
-                }
-
-                if(isValid)
-                {
-                    // CHECK INPUT IS WITHIN ACCEPTABLE RANGE
-                    double MAX_HEIGHT = 2.51; // Tallest person on Earth
-                    double MIN_HEIGHT = 0.54; // Shortest person on Earth
-                    double MAX_WEIGHT = 635; // Heaviest person on Earth
-                    double MIN_WEIGHT = 2; // Lightest person on Earth
-                    if(Double.parseDouble(heightInput.getText()) > MAX_HEIGHT && Double.parseDouble(heightInput.getText()) < MIN_HEIGHT)
-                    {
-                        errorMessage += "Height should be between "+ MAX_HEIGHT + " and "+ MIN_HEIGHT+". \n";
-                        isValid = false;
-                    }
-                    else if(Double.parseDouble(weightInput.getText()) > MAX_WEIGHT && Double.parseDouble(weightInput.getText()) < MIN_WEIGHT)
-                    {
-                        errorMessage += "Weight should be between "+ MAX_WEIGHT + " and "+ MIN_WEIGHT+". \n";
                         isValid = false;
                     }
                 }
@@ -164,6 +168,35 @@ public class Main extends Application {
                 }
             }
         });
+
+        // GRID PANE
+        GridPane pane = new GridPane();
+        // HORIZONTAL GAP
+        pane.setHgap(4);
+        // VERTICAL GAP
+        pane.setVgap(2);
+        // PADDING
+        pane.setPadding(new Insets(3, 3, 3, 3));
+
+        // ADDING THE CONTROLS TO THE GRID PANE
+        pane.add(heightLabel, 7, 13);
+        pane.add(weightLabel, 7, 14);
+        pane.add(bmiLabel, 7, 15);
+        pane.add(meterLabel, 10, 13);
+        pane.add(kgLabel, 10, 14);
+        pane.add(heightInput, 9, 13);
+        pane.add(weightInput, 9, 14);
+        pane.add(bmiOutput, 9, 15);
+        pane.add(calculateBMI, 8, 17, 3, 1);
+        pane.add(bmiStringLabel, 6 ,21, 9, 3);
+
+        // CREATE SCENE AND SET HEIGHT AND WIDTH
+        Scene scene = new Scene(pane, WIDTH, HEIGHT);
+
+        //SET PRIMARY STAGE SCENE
+        primaryStage.setScene(scene);
+        // SHOW PRIMARY STAGE
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
