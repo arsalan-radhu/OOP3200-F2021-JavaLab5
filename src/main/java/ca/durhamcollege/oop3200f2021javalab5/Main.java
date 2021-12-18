@@ -37,8 +37,8 @@ public class Main extends Application {
         // LABEL CONTROLS
         Label weightLabel = new Label("   My Weight: ");
         Label heightLabel = new Label("   My Height: ");
-        Label poundsLabel = new Label("/kilograms");
-        Label inchesLabel = new Label("/meters");
+        Label kgLabel = new Label("/kilograms");
+        Label meterLabel = new Label("/meters");
         Label bmiLabel = new Label("      My BMI: ");
         Label bmiStringLabel = new Label("");
         bmiStringLabel.setWrapText(true);
@@ -58,6 +58,14 @@ public class Main extends Application {
         // SETTING FONT
         Font font = Font.font("Helvetica", FontWeight.NORMAL, 20);
 
+        // SETTING FONT TO ATTRIBUTES
+        weightLabel.setFont(font);
+        heightLabel.setFont(font);
+        kgLabel.setFont(font);
+        meterLabel.setFont(font);
+        bmiLabel.setFont(font);
+        bmiStringLabel.setFont(font);
+        calculateBMI.setFont(font);
     }
 
     public static void main(String[] args) {
