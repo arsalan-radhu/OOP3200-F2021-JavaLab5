@@ -66,6 +66,104 @@ public class Main extends Application {
         bmiLabel.setFont(font);
         bmiStringLabel.setFont(font);
         calculateBMI.setFont(font);
+
+        // BUTTON HANDLER/ BMI CALCULATIONS
+        calculateBMI.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                boolean isValid = true;
+                double bmi;
+                String bmiString;
+                String bmiOut;
+                String bmiResult = "";
+                String errorMessage = "";
+
+                // VALIDATE INPUT EMPTY OR NOT
+                if(heightInput.getText() == null || heightInput.getText().trim().isEmpty())
+                {
+                    errorMessage += "Height should not be empty!\n ";
+                    isValid = false;
+                }
+                if(weightInput.getText() == null || weightInput.getText().trim().isEmpty())
+                {
+                    errorMessage+= "Weight should not be empty!\n ";
+                    isValid = false;
+                }
+
+                if(isValid)
+                {
+                    // CHECK INPUT IS NUMERIC OR NOT
+                    double attemptParse;
+                    try
+                    {
+                        attemptParse = Double.parseDouble(weightInput.getText());
+                        attemptParse = Double.parseDouble(heightInput.getText());
+                    }
+                    catch (NumberFormatException numberFormatException)
+                    {
+                        errorMessage += "NUMERIC input only!\n ";
+                        isValid = false;
+                    }
+                }
+
+                if(isValid)
+                {
+                    // CHECK INPUT IS WITHIN ACCEPTABLE RANGE
+                    double MAX_HEIGHT = 2.51; // Tallest person on Earth
+                    double MIN_HEIGHT = 0.54; // Shortest person on Earth
+                    double MAX_WEIGHT = 635; // Heaviest person on Earth
+                    double MIN_WEIGHT = 2; // Lightest person on Earth
+                    if(Double.parseDouble(heightInput.getText()) > MAX_HEIGHT && Double.parseDouble(heightInput.getText()) < MIN_HEIGHT)
+                    {
+                        errorMessage += "Height should be between "+ MAX_HEIGHT + " and "+ MIN_HEIGHT+". \n";
+                        isValid = false;
+                    }
+                    else if(Double.parseDouble(weightInput.getText()) > MAX_WEIGHT && Double.parseDouble(weightInput.getText()) < MIN_WEIGHT)
+                    {
+                        errorMessage += "Weight should be between "+ MAX_WEIGHT + " and "+ MIN_WEIGHT+". \n";
+                        isValid = false;
+                    }
+                }
+
+                // PRINT ERROR MESSAGE
+                if(!errorMessage.trim().isEmpty())
+                {
+                    errorMessage += "Please try again!";
+                }
+                bmiStringLabel.setText(errorMessage);
+
+                // IF INPUT IS VALID, CALCULATE BMI
+                if (isValid == true)
+                {
+                    bmi = (Double.parseDouble(weightInput.getText())) /
+                            (Double.parseDouble(heightInput.getText()) * Double.parseDouble(heightInput.getText()));
+                    bmiString = String.format("%.1f", bmi);
+                    bmiOut = String.format("With a bmi of %.1f you are considered ", bmi);
+
+                    // RESULT OF BMI CALCULATIONS
+                    if (bmi < 18.5)
+                    {
+                        bmiResult = "Underweight.";
+                    }
+                    else if (bmi >= 18.5 && bmi <= 24.9)
+                    {
+                        bmiResult = "Normal.";
+                    }
+                    else if (bmi >= 25 && bmi <= 29.9)
+                    {
+                        bmiResult = "Overweight.";
+                    }
+                    else if(bmi > 30)
+                    {
+                        bmiResult = "Obese.";
+                    }
+
+                    // RESULT
+                    bmiOutput.setText(bmiString);
+                    bmiStringLabel.setText(bmiOut + bmiResult);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
